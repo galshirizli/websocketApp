@@ -24,8 +24,8 @@ This solution demonstrates a setup with three containers:
    ```
 
 ## Access
-- For App1, browse to: 'https://<RHEL8-IP>/app1'
-- For App2, browse to: https://<RHEL8-IP>/app2
+- For App1, browse to: 'https://RHEL8-IP/app1'
+- For App2, browse to: https://RHEL8-IP/app2
 
 
 ## Delivery

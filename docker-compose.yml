@@ -2,28 +2,24 @@ version: '3.8'
 
 services:
   nginx:
-    image: nginx:latest
+    image: galshirizli/nginx
     ports:
       - "443:443"  
     networks:
       - my_network
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/certs/nginx-selfsigned.crt:/etc/nginx/ssl/nginx-selfsigned.crt
-      - ./nginx/certs/nginx-selfsigned.key:/etc/nginx/ssl/nginx-selfsigned.key
     depends_on:
       - app1
       - app2
 
   app2:
-    image: galshirizli/app2
+    image: galshirizli/app2:34
     ports:
       - "3001:3001"  
     networks:
       - my_network
 
   app1:
-    image: galshirizli/app1
+    image: galshirizli/app1:34
     ports:
       - "3000:3000"  
     networks:

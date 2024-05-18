@@ -9,6 +9,8 @@ This solution demonstrates a setup with three containers:
 
 ## System Diagram
 
+![System Diagram Image](images/SystemDiagram.jpg)
+
 ## Prerequisites
 - RHEL 8 / CentOS Stream 8 server
 - Docker and Docker Compose installed on the server
@@ -23,15 +25,18 @@ This solution demonstrates a setup with three containers:
    docker-compose -f ./websocketApp/docker-compose.yaml up -d
    ```
 ## Access
-- For App1, browse to: 'https://<RHEL8-IP>/app1' or 'http://<RHEL8-IP>:3000'
-- For App2, browse to: 'https://<RHEL8-IP>/app2' or 'http://<RHEL8-IP>:3001'
+- For App1, browse to: 'https://RHEL8-IP/app1' or 'http://RHEL8-IP:3000'
+- For App2, browse to: 'https://RHEL8-IP/app2' or 'http://RHEL8-IP:3001'
 
 
 ## Delivery
-If you have Docker Hub and Git credentials, you can run the Jenkinsfile in a Jenkins server to:
+Ensure you have the following:
 
-1. Build the images for App1 and App2.
-2. Push the images to Docker Hub.
-3. Update the tags in the Docker Compose file stored in Git.
+- A Docker Hub account
+- A Jenkins server set up
+ 
+Steps to Build and Push Docker Images:
 
-
+1. Set up Docker Hub credentials and repository names in the environment section of your Jenkinsfile
+2. Set the branch name in the environment variable GIT_BRANCH.
+3. Run the Jenkinsfile - Trigger the Jenkins pipeline to build and push the images.

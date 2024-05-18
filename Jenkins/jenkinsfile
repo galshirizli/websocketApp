@@ -4,7 +4,7 @@ pipeline {
         DOCKER_HUB_CREDENTIALS = credentials('DOCKER_HUB_CREDENTIALS')
         DOCKER_HUB_REPO_APP1 = 'galshirizli/app1'
         DOCKER_HUB_REPO_APP2 = 'galshirizli/app2'
-        GIT = credentials('GIT')
+        GIT_BRANCH = "gal"
     }
     stages {
         stage('Clean Workspace') {
@@ -15,7 +15,7 @@ pipeline {
         stage('Cloning Git Repo') {
             steps {
                 script {
-                    git branch: 'main', url: 'https://github.com/galshirizli/websocketApp.git'
+                    git branch: "${env.GIT_BRANCH}", url: 'https://github.com/galshirizli/websocketApp.git'
                 }
             }
         }
@@ -58,25 +58,6 @@ pipeline {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'DOCKER_HUB_CREDENTIALS') {
                         docker.image("${DOCKER_HUB_REPO_APP2}:${env.BUILD_ID}").push()
-                    }
-                }
-            }
-        }
-        stage('Update docker-compose.yml in GitHub') {
-            steps {
-                script {
-                    // Define the composeFile variable to locate the docker-compose.yml file
-                    def composeFile = "docker-compose.yml"
-
-                    // Update the docker-compose.yml file with new image tags using sed
-                    sh "sed -i 's|galshirizli/app1:.*|galshirizli/app1:${env.BUILD_ID}|' ${composeFile}"
-                    sh "sed -i 's|galshirizli/app2:.*|galshirizli/app2:${env.BUILD_ID}|' ${composeFile}"
-
-                    // Commit and push the changes
-                    withCredentials([GitUsernamePassword(credentialsId: GIT)]) {
-                        sh 'git add docker-compose.yml'
-                        sh 'git commit -m "Update docker-compose.yml with new Docker image tags - ${env.BUILD_ID}"'
-                        sh 'git push'
                     }
                 }
             }

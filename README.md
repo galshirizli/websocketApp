@@ -22,7 +22,6 @@ This solution demonstrates a setup with three containers:
    ```sh
    docker-compose -f ./websocketApp/docker-compose.yaml up -d
    ```
-
 ## Access
 - For App1, browse to: 'https://<RHEL8-IP>/app1' or 'http://<RHEL8-IP>:3000'
 - For App2, browse to: 'https://<RHEL8-IP>/app2' or 'http://<RHEL8-IP>:3001'

@@ -12,14 +12,14 @@ services:
       - app2
 
   app2:
-    image: galshirizli/app2:34
+    image: galshirizli/app2:46
     ports:
       - "3001:3001"  
     networks:
       - websocker-network
 
   app1:
-    image: galshirizli/app1:34
+    image: galshirizli/app1:46
     ports:
       - "3000:3000"  
     networks:

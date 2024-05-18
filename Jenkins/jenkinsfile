@@ -4,7 +4,7 @@ pipeline {
         DOCKER_HUB_CREDENTIALS = credentials('DOCKER_HUB_CREDENTIALS')
         DOCKER_HUB_REPO_APP1 = 'galshirizli/app1'
         DOCKER_HUB_REPO_APP2 = 'galshirizli/app2'
-        GIT_BRANCH = "gal"
+        GIT_BRANCH = "main"
     }
     stages {
         stage('Clean Workspace') {

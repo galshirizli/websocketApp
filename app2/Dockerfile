@@ -4,7 +4,7 @@ WORKDIR /home/node/app
 
 COPY . .
 
-RUN npm i
+RUN npm install
 
 EXPOSE 3001
 

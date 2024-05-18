@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('DOCKER_HUB_CREDENTIALS')
+        DOCKER_HUB_REPO_APP1 = 'galshirizli/app1'
+        DOCKER_HUB_REPO_APP2 = 'galshirizli/app2'
+        GIT_BRANCH = "gal"
+    }
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('Cloning Git Repo') {
+            steps {
+                script {
+                    git branch: "${env.GIT_BRANCH}", url: 'https://github.com/galshirizli/websocketApp.git'
+                }
+            }
+        }
+        stage('List Files') {
+            steps {
+                script {
+                    sh 'ls -la'
+                }
+            }
+        }
+        stage('Build app1 Docker Image') {
+            steps {
+                dir('app1') {
+                    script {
+                        docker.build("${DOCKER_HUB_REPO_APP1}:${env.BUILD_ID}")
+                    }
+                }
+            }
+        }
+        stage('Build app2 Docker Image') {
+            steps {
+                dir('app2') {
+                    script {
+                        docker.build("${DOCKER_HUB_REPO_APP2}:${env.BUILD_ID}")
+                    }
+                }
+            }
+        }
+        stage('Push app1 to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'DOCKER_HUB_CREDENTIALS') {
+                        docker.image("${DOCKER_HUB_REPO_APP1}:${env.BUILD_ID}").push()
+                    }
+                }
+            }
+        }
+        stage('Push app2 to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'DOCKER_HUB_CREDENTIALS') {
+                        docker.image("${DOCKER_HUB_REPO_APP2}:${env.BUILD_ID}").push()
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: galshirizli/nginx
+    ports:
+      - "443:443"  
+    networks:
+      - websocker-network
+    depends_on:
+      - app1
+      - app2
+
+  app2:
+    image: galshirizli/app2:46
+    ports:
+      - "3001:3001"  
+    networks:
+      - websocker-network
+
+  app1:
+    image: galshirizli/app1:46
+    ports:
+      - "3000:3000"  
+    networks:
+      - websocker-network
+
+networks:
+  websocker-network:
+    driver: bridge  
+

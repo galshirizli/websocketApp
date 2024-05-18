@@ -6,7 +6,7 @@ services:
     ports:
       - "443:443"  
     networks:
-      - my_network
+      - websocker-network
     depends_on:
       - app1
       - app2
@@ -16,16 +16,16 @@ services:
     ports:
       - "3001:3001"  
     networks:
-      - my_network
+      - websocker-network
 
   app1:
     image: galshirizli/app1:34
     ports:
       - "3000:3000"  
     networks:
-      - my_network
+      - websocker-network
 
 networks:
-  my_network:
+  websocker-network:
     driver: bridge  
 
